@@ -1,4 +1,4 @@
-# API RED SOCIAL
+# API SOCIAL MEDIA
 
 This is a back-end API for a generic social media
 
