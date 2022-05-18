@@ -3,9 +3,14 @@ import connect from "./libs/mongodb"
 import UsuarioService from "./Usuarios/services/Usuario.service"
 import {resetDataBase} from "./utils/dev.utils"
 import loadRoutes from "./routes"
+import {config} from "dotenv"
+config()
+import cors from "cors"
+
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(cors())
 const {PORT} = process.env
 
 loadRoutes(app)
