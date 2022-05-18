@@ -6,11 +6,12 @@ import loadRoutes from "./routes"
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded())
-
+const {PORT} = process.env
 
 loadRoutes(app)
 
-app.listen(8080, async () => {
+
+app.listen((PORT as string) || 8080, async () => {
     console.log("andando...")
     await connect()
     //console.log(await resetDataBase())
