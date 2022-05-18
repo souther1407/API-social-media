@@ -4,6 +4,6 @@ interface UserData{
 
 export const userData = {
     payload:{
-        sub:""
+        
     }
 }
