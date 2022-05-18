@@ -24,8 +24,9 @@ router.get("/:userId",async (request:Request,response:Response) => {
 router.post("/",isLogged,isTokenValid,verifyUserId, async (request:Request,response:Response) => {
     try {
         console.log(userData.payload)
+        const userId = userData.payload.sub
         const incomingPost= request.body
-        const newPost = await PostService.crearPost(incomingPost)
+        const newPost = await PostService.crearPost(incomingPost,userId)
         response.json(newPost)
     } catch (unknownError) {
         const error = unknownError as Error

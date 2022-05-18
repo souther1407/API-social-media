@@ -1,15 +1,13 @@
 import Post from "../model/post.model";
 
 interface IPost{
-    titulo:string,
-    contenido:string,
-    usuarioId:string,
+    tweet:string,
 }
 
 class PostService{
 
-    public static async crearPost(post:IPost){
-        await Post.create(post)
+    public static async crearPost(post:IPost,usuarioId:string){
+        await Post.create({contenido:post.tweet,usuarioId,fecha:new Date().toISOString()})
         return {success:true}
     }
 
