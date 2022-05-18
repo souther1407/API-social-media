@@ -20,7 +20,7 @@ loadRoutes(app)
 app.listen((PORT as string) || 8080, async () => {
     console.log("andando...")
     await connect()
-    //console.log(await resetDataBase())
+    console.log(await resetDataBase())
     console.log("conectado a mongodb")
     const user = {
         nombre:"souther92",
