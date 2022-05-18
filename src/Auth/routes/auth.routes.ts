@@ -23,7 +23,7 @@ router.post("/register", async (req:Request,res:Response) => {
     try {
         const {username,password,email} = req.body
         const respuesta= await AuthServices.registrarse(username,password,email)
-        res.status(CREATED).json({respuesta})
+        res.status(CREATED).json(respuesta)
     } catch (error) {
         res.status(CLIENT_ERROR).json({ error: obtenerTextoError(error)})
     }
