@@ -1,9 +1,4 @@
-interface UserData{
-    payload:object
-}
 
-export const userData = {
-    payload:{
-        
-    }
+export const userData:any = {
+    payload:{}
 }

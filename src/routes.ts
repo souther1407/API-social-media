@@ -8,9 +8,7 @@ export default (app:Express) => {
     
 app.use("/users",usuariosRouter)
 
-
 app.use("/auth",authRouter)
-
 
 app.use("/posts",postsRouter)
 

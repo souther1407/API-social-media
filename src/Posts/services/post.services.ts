@@ -7,7 +7,7 @@ interface IPost{
 class PostService{
 
     public static async crearPost(post:IPost,usuarioId:string){
-        await Post.create({contenido:post.tweet,usuarioId,fecha:new Date().toISOString()})
+        await Post.create({ contenido:post.tweet,usuarioId, fecha:new Date().toISOString()})
         return {success:true}
     }
 

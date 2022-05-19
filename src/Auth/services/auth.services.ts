@@ -16,7 +16,7 @@ class AuthServices{
         const payload = {
             sub: existe._id
         }
-
+        console.log("en iniciar sesion, services",payload.sub)
         const token = jwt.sign(payload,TOKEN_SECRET as string)
 
         return token
