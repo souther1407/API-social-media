@@ -1,5 +1,5 @@
 import Post from "../model/post.model";
-
+import Usuario from "../../Usuarios/model/usuario.model"
 interface IPost{
     tweet:string,
 }
@@ -12,10 +12,13 @@ class PostService{
     }
 
     public static async obtenerPorId(usuarioId:string){
-        return await Post.find({usuarioId})
+        return await (await Post.find({usuarioId}))
     }
     public static async obtenerTodos(cant:string="50"){
-        return await Post.find().limit(Number(cant)).sort({fecha:"desc"})
+        const posts = await Post.find().populate("usuarioId").limit(Number(cant)).sort({fecha:"desc"})
+
+    
+        return posts
     }
 }
 

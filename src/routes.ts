@@ -13,7 +13,6 @@ app.use("/auth",authRouter)
 
 app.use("/posts",postsRouter)
 
-
 app.use("/msg",mensajesRouter)
 
 app.use("/test",testRouter)
