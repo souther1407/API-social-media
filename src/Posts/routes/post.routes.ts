@@ -23,7 +23,7 @@ router.get("/:userId",async (request:Request,response:Response) => {
 router.get("/", async (request:Request,response:Response) => {
     const {cant} = request.query
     try {
-        const posts = await PostService.obtenerTodos(Number(cant))
+        const posts = await PostService.obtenerTodos(cant ? Number(cant): undefined)
         response.json(posts)
     } catch (unknownError) {
         const error = unknownError as Error
