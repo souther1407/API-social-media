@@ -14,8 +14,8 @@ class PostService{
     public static async obtenerPorId(usuarioId:string){
         return await Post.find({usuarioId})
     }
-    public static async obtenerTodos(cant:number=50){
-        return await Post.find().limit(cant).sort({fecha:"desc"})
+    public static async obtenerTodos(cant:string="50"){
+        return await Post.find().limit(Number(cant)).sort({fecha:"desc"})
     }
 }
 
