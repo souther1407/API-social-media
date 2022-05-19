@@ -20,6 +20,17 @@ router.get("/:userId",async (request:Request,response:Response) => {
     }
 })
 
+router.get("/", async (request:Request,response:Response) => {
+    const {cant} = request.query
+    try {
+        const posts = await PostService.obtenerTodos(Number(cant))
+        response.json(posts)
+    } catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
+
 
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
