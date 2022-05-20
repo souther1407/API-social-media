@@ -4,6 +4,8 @@ interface IPost{
     tweet:string,
 }
 
+
+
 class PostService{
 
     public static async crearPost(post:IPost,usuarioId:string){
@@ -12,13 +14,17 @@ class PostService{
     }
 
     public static async obtenerPorId(usuarioId:string){
-        return await (await Post.find({usuarioId}))
+        return  await Post.find({usuarioId})
     }
     public static async obtenerTodos(cant:string="50"){
         const posts = await Post.find().populate("usuarioId").limit(Number(cant)).sort({fecha:"desc"})
-
-    
         return posts
+    }
+
+    public static async obtenerNuevosPost(fecha:string){
+        const fechaComoDate = new Date(fecha);
+        const newPosts = await Post.find().populate("usuarioId").where("fecha").gt(fechaComoDate.getTime()).sort({fecha:"desc"})
+        return newPosts
     }
 }
 

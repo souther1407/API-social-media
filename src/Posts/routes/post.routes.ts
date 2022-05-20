@@ -31,6 +31,16 @@ router.get("/", async (request:Request,response:Response) => {
     }
 })
 
+router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
+    try {
+        const {fecha} = request.body;
+        const newPosts = await PostService.obtenerNuevosPost(fecha);
+        response.json(newPosts);
+    }catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
 
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
