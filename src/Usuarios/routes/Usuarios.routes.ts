@@ -17,5 +17,15 @@ router.get("/exist/:id",async (req:Request,res:Response) => {
     }
 })
 
+router.put("/:id",async (req:Request,res:Response) => {
+    const {id} = req.params
+    try {
+        const usuarioEditado = await UsuarioService.editarUsuario(req.body,id);
+        res.json({success:true})
+    } catch (error) {
+        const err = error as Error
+        res.status(400).json({error:err.message})
+    }
+})
 
 export default router
