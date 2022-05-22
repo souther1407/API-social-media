@@ -35,6 +35,11 @@ class UsuarioService{
         const existe = await Usuario.findOne({nombre:usuario,salt})
         return existe
     }
+
+    public static async editarUsuario(data:IUsuario,id:string){
+        const editado = await Usuario.updateOne({_id:id},{...data})
+        return editado
+    }
     
 }
 
