@@ -5,7 +5,7 @@ interface IUsuario{
     nombre:string,
     email:string,
     salt:string,
-    avatar:string
+    avatar?:string
 }
 
 class UsuarioService{

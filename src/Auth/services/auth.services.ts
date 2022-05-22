@@ -28,7 +28,7 @@ class AuthServices{
 
         if(existe) throw new Error("el usuario ya esa registrado")
         
-        return await UsuarioService.crear({nombre,salt:password,avatar:"",email})
+        return await UsuarioService.crear({nombre,salt:password,email})
 
     }
 }
