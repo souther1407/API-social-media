@@ -7,6 +7,7 @@ import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
 import {verifyUserId} from "../../middlewares/users.middlewares"
 
 import {userData} from "../../utils/globals"
+import { FileArray } from "express-fileupload";
 
 router.get("/:userId",async (request:Request,response:Response) => {
     //TODO: obtener todos los post hechos por un usuario
@@ -44,7 +45,8 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
 
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
-        console.log("archivo???",request.files)
+        if(request.files) console.log(request.files.image)
+        
         console.log("body con el path este??",request.body)
         const incomingPost = request.body
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
