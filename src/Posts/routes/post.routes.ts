@@ -5,9 +5,9 @@ import {CLIENT_ERROR} from "../../libs/httpCodes"
 
 import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
 import {verifyUserId} from "../../middlewares/users.middlewares"
-
 import {userData} from "../../utils/globals"
-import { FileArray } from "express-fileupload";
+import {guardarImagen} from "../../utils/files.utiles"
+import {UploadedFile} from "express-fileupload"
 
 router.get("/:userId",async (request:Request,response:Response) => {
     //TODO: obtener todos los post hechos por un usuario
@@ -45,10 +45,9 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
 
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
-        if(request.files) console.log(request.files.image)
-        
-        console.log("body con el path este??",request.body)
         const incomingPost = request.body
+        if(request.files) await guardarImagen(request.files.image as UploadedFile)
+        
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
         response.json(newPost)
     } catch (unknownError) {
