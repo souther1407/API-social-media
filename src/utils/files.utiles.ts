@@ -1,5 +1,5 @@
 import {UploadedFile} from "express-fileupload"
-import x from "../static/imagenes"
+
 function generarNumeroAleatorio(){
     return Math.floor(Math.random()*2342398923589)
 }

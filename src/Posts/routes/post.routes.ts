@@ -4,7 +4,7 @@ const router:Router = Router()
 import {CLIENT_ERROR} from "../../libs/httpCodes"
 
 import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
-import {verifyUserId} from "../../middlewares/users.middlewares"
+
 import {userData} from "../../utils/globals"
 import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
@@ -46,8 +46,11 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
         const incomingPost = request.body
+
         if(request.files) await guardarImagen(request.files.image as UploadedFile)
+
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
+
         response.json(newPost)
     } catch (unknownError) {
         const error = unknownError as Error
