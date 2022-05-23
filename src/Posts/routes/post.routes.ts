@@ -10,10 +10,13 @@ import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
 
 router.get("/:userId",async (request:Request,response:Response) => {
+    
     //TODO: obtener todos los post hechos por un usuario
     try {
         const {userId} = request.params
+
         const posts = await PostService.obtenerPorId(userId)
+
         response.json(posts)
     } catch (unknownError) {
         const error = unknownError as Error
