@@ -47,7 +47,6 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
     try {
         const incomingPost = request.body
         if(request.files) await guardarImagen(request.files.image as UploadedFile)
-        
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
         response.json(newPost)
     } catch (unknownError) {
