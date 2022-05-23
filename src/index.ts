@@ -2,6 +2,7 @@ import express from "express"
 import connect from "./libs/mongodb"
 import UsuarioService from "./Usuarios/services/Usuario.service"
 import {resetDataBase} from "./utils/dev.utils"
+import fileUpload from "express-fileupload"
 import loadRoutes from "./routes"
 import {config} from "dotenv"
 config()
@@ -11,6 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
+app.use(fileUpload({createParentPath:true}))
 
 const {PORT} = process.env
 
