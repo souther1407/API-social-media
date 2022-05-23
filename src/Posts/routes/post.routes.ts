@@ -44,7 +44,7 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
 
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
-        console.log(request.files)
+        console.log("archivo???",request.files)
         const incomingPost = request.body
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
         response.json(newPost)
