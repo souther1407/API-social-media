@@ -2,6 +2,7 @@ import Post from "../model/post.model";
 import Usuario from "../../Usuarios/model/usuario.model"
 interface IPost{
     tweet:string,
+    imagen?:string
 }
 
 
@@ -9,7 +10,7 @@ interface IPost{
 class PostService{
 
     public static async crearPost(post:IPost,usuarioId:string){
-        await Post.create({ contenido:post.tweet,usuarioId, fecha:new Date().toISOString()})
+        await Post.create({ contenido:post.tweet,usuarioId,imagen:post.imagen ,fecha:new Date().toISOString()})
         return {success:true}
     }
 

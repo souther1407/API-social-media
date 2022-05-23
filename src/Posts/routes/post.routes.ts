@@ -10,7 +10,7 @@ import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
 
 router.get("/:userId",async (request:Request,response:Response) => {
-    
+
     //TODO: obtener todos los post hechos por un usuario
     try {
         const {userId} = request.params
@@ -50,7 +50,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
     try {
         const incomingPost = request.body
 
-        if(request.files) await guardarImagen(request.files.image as UploadedFile)
+        if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile)
 
         const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
 

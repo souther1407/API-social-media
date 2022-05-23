@@ -8,4 +8,5 @@ export async function guardarImagen(imagen:UploadedFile){
     imagen.name="imagen"+generarNumeroAleatorio()+".png"
 
     await imagen.mv("./static/imagenes/"+imagen.name)
+    return "/imagenes/"+imagen.name
 }
