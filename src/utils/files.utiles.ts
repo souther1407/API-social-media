@@ -6,6 +6,6 @@ function generarNumeroAleatorio(){
 
 export async function guardarImagen(imagen:UploadedFile){
     imagen.name="imagen"+generarNumeroAleatorio()+".png"
-    console.log(__dirname)
-    await imagen.mv("./../static/imagenes/"+imagen.name)
+
+    await imagen.mv("./static/imagenes/"+imagen.name)
 }
