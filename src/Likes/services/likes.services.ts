@@ -17,6 +17,10 @@ class LikesServices{
     public static async obtenerLaCantidadLikes(postId:string){
         return await LikesModel.count({postId})
     }
+
+    public static async dioLike(postId:string,usuarioId:string){
+        return await LikesModel.findOne({postId,usuarioId}) !== null;
+    }
 }
 
 

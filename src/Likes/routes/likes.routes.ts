@@ -32,6 +32,17 @@ router.post("/",isLogged,isTokenValid,async (request:Request, response:Response)
     }
 })
 
+router.get("/liked/:postId",isLogged,isTokenValid,async (request:Request, response:Response) => {
+    try {
+        const {postId} = request.params;
+        const {sub} = userData.payload
+        const liked = await LikesServices.dioLike(postId,sub);
+        response.json({liked})
+    }catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
 
 router.get("/:postId", async (request:Request, response:Response) => {
     try {
@@ -43,5 +54,7 @@ router.get("/:postId", async (request:Request, response:Response) => {
         response.status(CLIENT_ERROR).json({error: error.message})
     }
 })
+
+
 
 export default router;
