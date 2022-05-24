@@ -1,5 +1,6 @@
 import Post from "../model/post.model";
 import Usuario from "../../Usuarios/model/usuario.model"
+import Likes from "../../Likes/model/likes.model"
 interface IPost{
     tweet:string,
     imagen?:string
@@ -26,6 +27,12 @@ class PostService{
         const fechaComoDate = new Date(fecha);
         const newPosts = await Post.find().populate("usuarioId").where("fecha").gt(fechaComoDate.getTime()).sort({fecha:"desc"})
         return newPosts
+    }
+
+    public static async obtenerTodosFavoritos(usuarioId:string){
+       
+        return await Likes.find({usuarioId},"post").populate("postId")
+
     }
 }
 

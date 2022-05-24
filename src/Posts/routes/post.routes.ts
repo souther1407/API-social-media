@@ -9,6 +9,23 @@ import {userData} from "../../utils/globals"
 import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
 
+
+
+
+
+router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:Response) => {
+    try {
+        //const usuarioId = (request as any).userData.sub
+        const usuarioId = userData.payload.sub
+        console.log("adasda",usuarioId)
+        const postsFavoritos = await PostService.obtenerTodosFavoritos(usuarioId)
+        response.json(postsFavoritos);
+    } catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
+
 router.get("/:userId",async (request:Request,response:Response) => {
 
     //TODO: obtener todos los post hechos por un usuario
@@ -35,6 +52,8 @@ router.get("/", async (request:Request,response:Response) => {
     }
 })
 
+
+
 router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
     try {
         const {fecha} = request.body;
@@ -52,7 +71,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
 
         if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile)
 
-        const newPost = await PostService.crearPost(incomingPost,userData.payload.sub)
+        const newPost = await PostService.crearPost(incomingPost,(request as any).userData)
         
         response.json(newPost)
     } catch (unknownError) {
