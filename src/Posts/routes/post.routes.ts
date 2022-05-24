@@ -15,9 +15,9 @@ import {UploadedFile} from "express-fileupload"
 
 router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:Response) => {
     try {
-        //const usuarioId = (request as any).userData.sub
+        const usuarioId2 = (request as any).userData.sub
         const usuarioId = userData.payload.sub
-        console.log("adasda",usuarioId)
+        console.log("usuarioId2",usuarioId2)
         const postsFavoritos = await PostService.obtenerTodosFavoritos(usuarioId)
         response.json(postsFavoritos);
     } catch (unknownError) {
@@ -71,7 +71,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
 
         if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile)
 
-        const newPost = await PostService.crearPost(incomingPost,(request as any).userData)
+        const newPost = await PostService.crearPost(incomingPost,(request as any).userData.sub)
         
         response.json(newPost)
     } catch (unknownError) {
