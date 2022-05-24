@@ -15,6 +15,7 @@ router.get("/", async (request:Request, response:Response) => {
         response.status(CLIENT_ERROR).json({error: error.message})
     }
 })
+
 router.post("/",isLogged,isTokenValid,async (request:Request, response:Response) => {
     try {
 
@@ -26,6 +27,18 @@ router.post("/",isLogged,isTokenValid,async (request:Request, response:Response)
 
         response.json({ success: true, newLike })
     } catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
+
+
+router.get("/:postId", async (request:Request, response:Response) => {
+    try {
+        const {postId} = request.params;
+        const cantidadLikes = await LikesServices.obtenerLaCantidadLikes(postId);
+        response.json({cantidadLikes})
+    }catch (unknownError) {
         const error = unknownError as Error
         response.status(CLIENT_ERROR).json({error: error.message})
     }
