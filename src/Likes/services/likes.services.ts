@@ -21,6 +21,10 @@ class LikesServices{
     public static async dioLike(postId:string,usuarioId:string){
         return await LikesModel.findOne({postId,usuarioId}) !== null;
     }
+
+    public static async dislike(postId:string,usuarioId:string){
+        return await LikesModel.remove({postId,usuarioId})
+    }
 }
 
 

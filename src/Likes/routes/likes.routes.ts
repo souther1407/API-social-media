@@ -44,6 +44,8 @@ router.get("/liked/:postId",isLogged,isTokenValid,async (request:Request, respon
     }
 })
 
+
+
 router.get("/:postId", async (request:Request, response:Response) => {
     try {
         const {postId} = request.params;
@@ -55,6 +57,16 @@ router.get("/:postId", async (request:Request, response:Response) => {
     }
 })
 
-
+router.delete("/dislike/:postId",isLogged,isTokenValid,async (request:Request, response:Response) => {
+    try {
+        const {postId} = request.params;
+        const {sub} = userData.payload
+        const disliked = await LikesServices.dislike(postId,sub);
+        response.json({disliked})
+    }catch (unknownError) {
+        const error = unknownError as Error
+        response.status(CLIENT_ERROR).json({error: error.message})
+    }
+})
 
 export default router;
