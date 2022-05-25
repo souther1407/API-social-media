@@ -1,5 +1,7 @@
 import Post from "../model/post.model";
 import Likes from "../../Likes/model/likes.model"
+import LikesServices from "../../Likes/services/likes.services"
+
 interface IPost{
     tweet:string,
     imagen?:string
@@ -18,8 +20,10 @@ class PostService{
     }
     public static async obtenerTodos(cant:string="50"){
         const posts = await Post.find().populate("usuarioId").limit(Number(cant)).sort({fecha:"desc"})
-        return posts
+        const likes = await Promise.all(posts.map( p => LikesServices.obtenerLaCantidadLikes(p._id)));
+        return posts.map((p,i) =>{return {post:p,cantidadLikes:likes[i]}})
     }
+    
 
     public static async obtenerNuevosPost(fecha:string){
         const fechaComoDate = new Date(fecha);
