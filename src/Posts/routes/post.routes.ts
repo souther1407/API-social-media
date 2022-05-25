@@ -15,6 +15,7 @@ import {UploadedFile} from "express-fileupload"
 
 router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:Response) => {
     try {
+        //TODO: migrar a userData del objeto request
         const usuarioId2 = (request as any).userData.sub
         const usuarioId = userData.payload.sub
         console.log("usuarioId2",usuarioId2)

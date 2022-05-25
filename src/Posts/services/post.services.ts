@@ -1,11 +1,9 @@
 import Post from "../model/post.model";
-import Usuario from "../../Usuarios/model/usuario.model"
 import Likes from "../../Likes/model/likes.model"
 interface IPost{
     tweet:string,
     imagen?:string
 }
-
 
 
 class PostService{
@@ -31,7 +29,7 @@ class PostService{
 
     public static async obtenerTodosFavoritos(usuarioId:string){
        
-        return await Likes.find({usuarioId},"post").populate("postId")
+        return await Likes.find({usuarioId},"post").populate(["postId","usuarioId"])
 
     }
 }
