@@ -29,7 +29,7 @@ class PostService{
 
     public static async obtenerTodosFavoritos(usuarioId:string){
        
-        return await Likes.find({usuarioId},"post").populate(["postId","usuarioId"]).sort("postId.fecha")
+        return await Likes.find({usuarioId},"postId").populate(["postId","usuarioId"])
 
     }
 }
