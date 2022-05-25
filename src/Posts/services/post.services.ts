@@ -28,7 +28,9 @@ class PostService{
     public static async obtenerNuevosPost(fecha:string){
         const fechaComoDate = new Date(fecha);
         const newPosts = await Post.find().populate("usuarioId").where("fecha").gt(fechaComoDate.getTime()).sort({fecha:"desc"})
-        return newPosts
+        const likes = await Promise.all(newPosts.map( p => LikesServices.obtenerLaCantidadLikes(p._id)));
+        return newPosts.map((p,i) =>{return {post:p,cantidadLikes:likes[i]}})
+        
     }
 
     public static async obtenerTodosFavoritos(usuarioId:string){
