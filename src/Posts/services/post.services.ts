@@ -34,8 +34,9 @@ class PostService{
     }
 
     public static async obtenerTodosFavoritos(usuarioId:string){
-       
-        return await Likes.find({usuarioId},"postId").populate(["postId","usuarioId"])
+        const favoritesPosts = await Likes.find({usuarioId},"postId").populate(["postId","usuarioId"]);
+        const likes = await Promise.all(favoritesPosts.map( p => LikesServices.obtenerLaCantidadLikes(p._id)));
+        return favoritesPosts.map((p,i) =>{return {post:p,cantidadLikes:likes[i]}}) 
 
     }
 }
