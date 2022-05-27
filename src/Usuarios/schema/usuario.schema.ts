@@ -3,6 +3,8 @@ import mongoose,{Schema,SchemaTypes} from "mongoose";
 
 const UsuarioSchema = new Schema({
     nombre: { type:SchemaTypes.String, unique:true},
+    descripcion:{type:SchemaTypes.String},
+    fecha:{type:SchemaTypes.Date},
     email: { type:SchemaTypes.String, unique:true},
     salt: SchemaTypes.String,
     avatar: {

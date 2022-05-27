@@ -6,6 +6,7 @@ import LikesServices from "../services/likes.services";
 
 const router = Router()
 
+// obtiene todos los likes de todos los usuarios
 router.get("/", async (request:Request, response:Response) => {
     try {
         const likes = await LikesServices.obtenerTodoLosLikes()
@@ -16,6 +17,7 @@ router.get("/", async (request:Request, response:Response) => {
     }
 })
 
+// agrega un like por parte de un usuario a un post
 router.post("/",isLogged,isTokenValid,async (request:Request, response:Response) => {
     try {
 
@@ -32,6 +34,7 @@ router.post("/",isLogged,isTokenValid,async (request:Request, response:Response)
     }
 })
 
+// devuelve si un usuario ya dio like a un post
 router.get("/liked/:postId",isLogged,isTokenValid,async (request:Request, response:Response) => {
     try {
         const {postId} = request.params;
@@ -45,7 +48,7 @@ router.get("/liked/:postId",isLogged,isTokenValid,async (request:Request, respon
 })
 
 
-
+// obtiene la cantidad de likes de un post
 router.get("/:postId", async (request:Request, response:Response) => {
     try {
         const {postId} = request.params;
@@ -57,6 +60,7 @@ router.get("/:postId", async (request:Request, response:Response) => {
     }
 })
 
+// borra un like de un post
 router.delete("/dislike/:postId",isLogged,isTokenValid,async (request:Request, response:Response) => {
     try {
         const {postId} = request.params;

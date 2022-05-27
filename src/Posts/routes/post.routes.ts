@@ -12,7 +12,7 @@ import {UploadedFile} from "express-fileupload"
 
 
 
-
+// Obtiene la lista de posts favoritos de un usuario
 router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:Response) => {
     try {
         //TODO: migrar a userData del objeto request
@@ -27,6 +27,7 @@ router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:R
     }
 })
 
+// Obtiene los posts hechos por un usuario
 router.get("/:userId",async (request:Request,response:Response) => {
 
     //TODO: obtener todos los post hechos por un usuario
@@ -42,6 +43,7 @@ router.get("/:userId",async (request:Request,response:Response) => {
     }
 })
 
+// devuelve un array con nuevos posts que el usuario este viendo en el home
 router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
     try {
         const {fecha} = request.body;
@@ -53,6 +55,8 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
     }
 })
 
+
+// obtiene todos los posts de todos los usuarios
 router.get("/", async (request:Request,response:Response) => {
     const {cant} = request.query
     try {
@@ -64,10 +68,7 @@ router.get("/", async (request:Request,response:Response) => {
     }
 })
 
-
-
-
-
+// agrega un nuevo post hecho por un usuario
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
         const incomingPost = request.body

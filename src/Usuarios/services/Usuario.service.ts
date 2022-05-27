@@ -22,7 +22,7 @@ class UsuarioService{
     }
 
     public static async obtenerTodos(){
-        return await Usuario.find()
+        return await Usuario.find({},)
     }
 
     public static async existeUsuarioId(usuarioId:string){
@@ -39,6 +39,11 @@ class UsuarioService{
     public static async editarUsuario(data:IUsuario,id:string){
         const editado = await Usuario.updateOne({_id:id},{...data})
         return editado
+    }
+
+    public static async obtenerUsuarioPorId(usuarioId:string){
+        const usuario = await Usuario.findById(usuarioId);
+        return usuario;
     }
     
 }
