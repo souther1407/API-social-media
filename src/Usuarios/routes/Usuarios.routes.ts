@@ -1,6 +1,7 @@
 import { Router,Request,Response } from "express";
 import UsuarioService from "../services/Usuario.service";
 import {CLIENT_ERROR} from "../../libs/httpCodes"
+import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
 const router:Router = Router()
 
 
@@ -22,9 +23,10 @@ router.get("/exist/:id",async (req:Request,res:Response) => {
 })
 
 // edita la informacion de un usuario
-router.put("/:id",async (req:Request,res:Response) => {
-    const {id} = req.params
+router.put("/",isLogged,isTokenValid,async (req:Request,res:Response) => {
     try {
+        const id= (req as any).userData.payload.sub
+        console.log("id en put user",id)
         const usuarioEditado = await UsuarioService.editarUsuario(req.body,id);
         res.json({success:true})
     } catch (error) {

@@ -2,9 +2,7 @@ import { Router,Request,Response } from "express";
 import PostService from "../services/post.services";
 const router:Router = Router()
 import {CLIENT_ERROR} from "../../libs/httpCodes"
-
 import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
-
 import {userData} from "../../utils/globals"
 import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
@@ -17,9 +15,13 @@ router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:R
     try {
         //TODO: migrar a userData del objeto request
         const usuarioId2 = (request as any).userData.sub
+
         const usuarioId = userData.payload.sub
+
         console.log("usuarioId2",usuarioId2)
+
         const postsFavoritos = await PostService.obtenerTodosFavoritos(usuarioId)
+        
         response.json(postsFavoritos);
     } catch (unknownError) {
         const error = unknownError as Error
