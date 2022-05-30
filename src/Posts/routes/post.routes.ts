@@ -74,7 +74,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
         const incomingPost = request.body
 
         /* if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile) */
-        if(request.files) console.log(await guardarImagen(request.files.image as UploadedFile))
+        if(request.files) console.log("img",await guardarImagen(request.files.image as UploadedFile))
 
         const newPost = await PostService.crearPost(incomingPost,(request as any).userData.sub)
         
