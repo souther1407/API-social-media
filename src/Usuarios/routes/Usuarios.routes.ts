@@ -25,8 +25,9 @@ router.get("/exist/:id",async (req:Request,res:Response) => {
 // edita la informacion de un usuario
 router.put("/",isLogged,isTokenValid,async (req:Request,res:Response) => {
     try {
-        const id= (req as any).userData.payload.sub
+        const id= (req as any).userData.sub
         console.log("id en put user",id)
+        console.log("archivos en el put de usuarios",req.files)
         const usuarioEditado = await UsuarioService.editarUsuario(req.body,id);
         res.json({success:true})
     } catch (error) {
