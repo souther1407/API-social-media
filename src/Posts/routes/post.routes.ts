@@ -72,9 +72,9 @@ router.get("/", async (request:Request,response:Response) => {
 router.post("/",isLogged,isTokenValid, async (request:Request,response:Response) => {
     try {
         const incomingPost = request.body
-        console.log("llega la imagen bien aca", request.files!.image as UploadedFile)
-        /* if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile) */
-        if(request.files) console.log("img traida del otro server",await guardarImagen(request.files.image as UploadedFile))
+       
+        if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile)
+        /* if(request.files) console.log("img traida del otro server",await guardarImagen(request.files.image as UploadedFile)) */
 
         const newPost = await PostService.crearPost(incomingPost,(request as any).userData.sub)
         
