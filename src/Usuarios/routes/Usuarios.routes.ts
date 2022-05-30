@@ -25,7 +25,7 @@ router.get("/exist/:id",async (req:Request,res:Response) => {
 
 // edita la informacion de un usuario
 router.put("/",isLogged,isTokenValid,async (req:Request,res:Response) => {
-    const {avatar,portada} = req.files;
+    const {avatar,portada} = req.files as any;
     const user= req.body
     try {
         const id= (req as any).userData.sub
