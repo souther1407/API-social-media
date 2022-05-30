@@ -1,13 +1,22 @@
 import axios from "axios";
-import fetch from "node-fetch";
+import fetch from 'node-fetch';
 import {URL_IMGS} from "./globals"
 import {UploadedFile} from "express-fileupload"
+
 export async function getInit(){
-    const r = await fetch(URL_IMGS)
-    const response = await r.json()
-    return  response
+    const rawResponse = await fetch(URL_IMGS)
+    const response = await rawResponse.json()
+    return response
+    /* return  (await axios.get(URL_IMGS)).data */
 }
 
 export async function guardarImagen(imagen:UploadedFile){
-    return (await axios.post(URL_IMGS+"save",{imagen})).data
+    const rawResponse = await fetch(URL_IMGS+"save",{
+        headers:{
+            "Content-type":"application/json"
+        },
+        body:JSON.stringify(imagen)
+    })
+    const response = await rawResponse.json()
+    return response
 }
