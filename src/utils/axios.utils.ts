@@ -13,9 +13,6 @@ export async function getInit(){
 export async function guardarImagen(imagen:UploadedFile){
     const rawResponse = await fetch(URL_IMGS+"save",{
         method:"POST",
-        headers:{
-            "content-type":"application/json"
-        },
         body:JSON.stringify(imagen)
     })
     const response = await rawResponse.json()
