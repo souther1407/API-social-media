@@ -2,6 +2,7 @@ import { Router,Request,Response } from "express";
 import UsuarioService from "../services/Usuario.service";
 import {CLIENT_ERROR} from "../../libs/httpCodes"
 import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
+import {guardarImagen} from "../../utils/files.utiles"
 const router:Router = Router()
 
 
@@ -24,11 +25,13 @@ router.get("/exist/:id",async (req:Request,res:Response) => {
 
 // edita la informacion de un usuario
 router.put("/",isLogged,isTokenValid,async (req:Request,res:Response) => {
+    const {avatar,portada} = req.files;
+    const user= req.body
     try {
         const id= (req as any).userData.sub
-        console.log("id en put user",id)
-        console.log("archivos en el put de usuarios",req.files)
-        const usuarioEditado = await UsuarioService.editarUsuario(req.body,id);
+        if(avatar)user.avatar = await guardarImagen(avatar);
+        if(portada)user.portada = await guardarImagen(portada);
+        const usuarioEditado = await UsuarioService.editarUsuario(user,id);
         res.json({success:true})
     } catch (error) {
         const err = error as Error
