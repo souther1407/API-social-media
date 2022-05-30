@@ -3,6 +3,7 @@ import { CLIENT_ERROR } from "../../libs/httpCodes";
 import {getInit} from "../../utils/axios.utils"
 const router:Router = Router()
 import path from "path"
+
 router.get("/prueba",async (request:Request,response:Response) => {
     response.json(await getInit())
 })
