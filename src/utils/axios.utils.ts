@@ -16,7 +16,7 @@ export async function guardarImagen(imagen:UploadedFile){
         headers:{
             "Content-Type":"application/json"
         },
-        body:JSON.stringify(imagen)
+        body:JSON.stringify({imagen})
     })
     const response = await rawResponse.json()
     return response
