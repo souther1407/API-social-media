@@ -6,11 +6,11 @@ import {CLIENT_ERROR} from "../../libs/httpCodes"
 import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
 
 import {userData} from "../../utils/globals"
-//import {guardarImagen} from "../../utils/files.utiles"
+import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
 
-import {guardarImagen} from "../../utils/axios.utils"
-
+/* import {guardarImagen} from "../../utils/axios.utils"
+ */
 
 // Obtiene la lista de posts favoritos de un usuario
 router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:Response) => {
@@ -74,6 +74,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
         const incomingPost = request.body
        
         if(request.files) incomingPost.imagen=await guardarImagen(request.files.image as UploadedFile)
+        console.log("ruta imagen",incomingPost.imagen)
         /* if(request.files) console.log("img traida del otro server",await guardarImagen(request.files.image as UploadedFile)) */
 
         const newPost = await PostService.crearPost(incomingPost,(request as any).userData.sub)
