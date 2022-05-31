@@ -6,6 +6,7 @@ import {isLogged,isTokenValid} from "../../middlewares/auth.middlewares"
 import {userData} from "../../utils/globals"
 import {guardarImagen} from "../../utils/files.utiles"
 import {UploadedFile} from "express-fileupload"
+import { responderError } from "../../utils/errors.utils";
 
 /* import {guardarImagen} from "../../utils/axios.utils"
  */
@@ -18,14 +19,12 @@ router.get("/favourites",isLogged,isTokenValid,async (request:Request,response:R
 
         const usuarioId = userData.payload.sub
 
-        console.log("usuarioId2",usuarioId2)
 
         const postsFavoritos = await PostService.obtenerTodosFavoritos(usuarioId)
         
         response.json(postsFavoritos);
     } catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response)
     }
 })
 
@@ -40,8 +39,7 @@ router.get("/:userId",async (request:Request,response:Response) => {
 
         response.json(posts)
     } catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response)
     }
 })
 
@@ -52,8 +50,7 @@ router.post("/hay-nuevos-posts",async (request:Request,response:Response) => {
         const newPosts = await PostService.obtenerNuevosPost(fecha);
         response.json(newPosts);
     }catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response)
     }
 })
 
@@ -65,8 +62,7 @@ router.get("/", async (request:Request,response:Response) => {
         const posts = await PostService.obtenerTodos(cant as string)
         response.json(posts)
     } catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response)
     }
 })
 
@@ -83,8 +79,7 @@ router.post("/",isLogged,isTokenValid, async (request:Request,response:Response)
         
         response.json(newPost)
     } catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response)
     }
 })
 

@@ -1,6 +1,7 @@
 import { Router,Request,Response } from "express";
 import { CLIENT_ERROR } from "../../libs/httpCodes";
 import MensajesServices from "../services/mensajes.services";
+import { responderError } from "../../utils/errors.utils";
 const router:Router = Router()
 
 router.post("/send", async (request:Request,response:Response) => {
@@ -9,7 +10,7 @@ router.post("/send", async (request:Request,response:Response) => {
         const newMsg = await MensajesServices.enviarMensaje(body)
         response.json({success:true, newMsg})
     } catch (error) {
-        response.status(CLIENT_ERROR).json({ error:(error as Error).message })
+        responderError(error as Error,response)
     }
 })
 
@@ -19,7 +20,7 @@ router.post("/recieve",async (request:Request,response:Response) => {
         const msgs = await MensajesServices.getConversacion(usuario_origen,usuario_destino)
         response.json(msgs)
     } catch (error) {
-        response.status(CLIENT_ERROR).json({ error:(error as Error).message })
+        responderError(error as Error,response)
     }
 })
 

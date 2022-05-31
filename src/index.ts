@@ -1,7 +1,7 @@
 import express from "express"
 import connect from "./libs/mongodb"
 import UsuarioService from "./Usuarios/services/Usuario.service"
-import {resetDataBase} from "./utils/dev.utils"
+import {resetDataBase,Logger} from "./utils/dev.utils"
 import fileUpload from "express-fileupload"
 import loadRoutes from "./routes"
 import {config} from "dotenv"
@@ -20,15 +20,8 @@ loadRoutes(app)
 
 
 app.listen((PORT as string) || 8080, async () => {
-    console.log("andando...")
+    Logger.success("andando en puerto "+(PORT || 8080))
     await connect()
-    //console.log(await resetDataBase())
-    console.log("conectado a mongodb")
-    const user = {
-        nombre:"souther92",
-        email:"south92@hotmail.com",
-        salt:"123",
-        avatar:"afaf",
-    }
+    Logger.success("conectado a mongoDB")
  
 })

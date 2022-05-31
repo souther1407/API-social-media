@@ -3,7 +3,7 @@ import {CLIENT_ERROR} from "../../libs/httpCodes"
 import { isLogged, isTokenValid } from "../../middlewares/auth.middlewares";
 import { userData } from "../../utils/globals";
 import LikesServices from "../services/likes.services";
-
+import { responderError } from "../../utils/errors.utils";
 const router = Router()
 
 // obtiene todos los likes de todos los usuarios
@@ -12,8 +12,7 @@ router.get("/", async (request:Request, response:Response) => {
         const likes = await LikesServices.obtenerTodoLosLikes()
         response.json(likes)
     }catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response);
     }
 })
 
@@ -29,8 +28,7 @@ router.post("/",isLogged,isTokenValid,async (request:Request, response:Response)
 
         response.json({ success: true, newLike })
     } catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response);
     }
 })
 
@@ -42,8 +40,7 @@ router.get("/liked/:postId",isLogged,isTokenValid,async (request:Request, respon
         const liked = await LikesServices.dioLike(postId,sub);
         response.json({liked})
     }catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response);
     }
 })
 
@@ -55,8 +52,7 @@ router.get("/:postId", async (request:Request, response:Response) => {
         const cantidadLikes = await LikesServices.obtenerLaCantidadLikes(postId);
         response.json({cantidadLikes})
     }catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response);
     }
 })
 
@@ -64,12 +60,11 @@ router.get("/:postId", async (request:Request, response:Response) => {
 router.delete("/dislike/:postId",isLogged,isTokenValid,async (request:Request, response:Response) => {
     try {
         const {postId} = request.params;
-        const {sub} = userData.payload
+        const {sub} = userData.payload;
         const disliked = await LikesServices.dislike(postId,sub);
         response.json({disliked})
     }catch (unknownError) {
-        const error = unknownError as Error
-        response.status(CLIENT_ERROR).json({error: error.message})
+        responderError(unknownError as Error,response);
     }
 })
 
